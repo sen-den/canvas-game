@@ -1,0 +1,100 @@
+<html>
+<body>
+    <canvas id="main" width="500" height="500"style="border:1px solid #000000;">
+    </canvas>
+
+    <script>
+        var canvas = document.getElementById("main");
+        var ctx = canvas.getContext("2d");
+        
+        var field = {
+            xMin: 0,
+            yMin: 0,
+            xMax: 500,
+            yMax: 500
+        };
+
+        var rocketSize = 50;
+        var fireMaxSize = 25;
+        var fireColor = "#FF3333";
+
+        var r1 = {
+            x: 100,
+            y: 100,
+            a: {x: -0.5, y: -1},
+            v: {x: 0, y: 0},
+            color: "#00FF00"
+        };
+        
+
+        var r2 = {
+            x: 400,
+            y: 400,
+            a: {x: 0.2, y: 0.5},
+            v: {x: 0, y: 0},
+            color: "#0000FF"
+        };
+
+
+        ctx.fillStyle = r1.color;
+        ctx.fillRect(r1.x, r1.y, rocketSize, rocketSize);
+        ctx.fillStyle = fireColor;
+        ctx.fillRect(
+                r1.x+rocketSize, 
+                r1.y, 
+                r1.a.x >= 0 ? fireMaxSize*r1.a.x : 1, 
+                rocketSize
+                );
+        ctx.fillRect(
+                r1.x, 
+                r1.y+rocketSize, 
+                rocketSize, 
+                r1.a.y >= 0 ? fireMaxSize*r1.a.y : 1
+                );
+        ctx.fillRect(
+                r1.a.x < 0 ? r1.x+fireMaxSize*r1.a.x : r1.x, 
+                r1.y, 
+                r1.a.x < 0 ? -fireMaxSize*r1.a.x : 1, 
+                rocketSize
+                );
+        ctx.fillRect(
+                r1.x,
+                r1.a.y < 0 ? r1.y+fireMaxSize*r1.a.y : r1.y, 
+                rocketSize, 
+                r1.a.y < 0 ? -fireMaxSize*r1.a.y : 1
+                );
+
+        ctx.fillStyle = r2.color;
+        ctx.fillRect(r2.x, r2.y, rocketSize, rocketSize);
+
+        ctx.fillStyle = fireColor;
+        ctx.fillRect(
+                r2.x+rocketSize, 
+                r2.y, 
+                r2.a.x >= 0 ? fireMaxSize*r2.a.x : 1, 
+                rocketSize
+                );
+        ctx.fillRect(
+                r2.x, 
+                r2.y+rocketSize, 
+                rocketSize, 
+                r2.a.y >= 0 ? fireMaxSize*r2.a.y : 1
+                );
+        ctx.fillRect(
+                r2.a.x < 0 ? r2.x+fireMaxSize*r2.a.x : r2.x, 
+                r2.y, 
+                r2.a.x < 0 ? -fireMaxSize*r2.a.x : 1, 
+                rocketSize
+                );
+        ctx.fillRect(
+                r2.x,
+                r2.a.y < 0 ? r2.y+fireMaxSize*r2.a.y : r2.y, 
+                rocketSize, 
+                r2.a.y < 0 ? -fireMaxSize*r2.a.y : 1
+                );
+
+    </script>
+
+</body>
+</html>
+
