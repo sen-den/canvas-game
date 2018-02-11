@@ -1,0 +1,125 @@
+<html>
+<body>
+    <canvas id="main" width="500" height="500" style="border:1px solid #000000;" onClick="steep();">
+    </canvas>
+
+    <script>
+        var canvas = document.getElementById("main");
+        var ctx = canvas.getContext("2d");
+        var cWidth = canvas.offsetWidth;
+        var cHeight = canvas.offsetHeight;
+        
+        var gravity = 6.67E-11;
+        var dt = 0.1;
+        var fMax = 1.0;
+        var iterN = 10.0;
+
+        
+
+        var obj = {
+            1: {
+                x: 0.0,
+                y: 0.0,
+                a: {
+                    x: 0,
+                    y: 0
+                },
+                v: {
+                    x: 0,
+                    y: 0
+               },
+                mass: 1.989E30,
+                color: "#00FF00"
+            },
+            2: {
+                x: 1.5E8,
+                y: 0.0,
+                a: {
+                    x: 0,
+                    y: 0
+                },
+                v: {
+                    x: 0,
+                    y: 29.783
+                },
+                mass: 5.972E24,
+                color: "#0000FF"
+            }
+        };
+
+        function pRad(m) {
+            return Math.log(10) / Math.log(m);
+        };
+
+        function draw(obj){
+            for(var i in obj) {
+                ctx.beginPath();
+                console.log(Math.floor(obj[i].x / 1E6) + 250);
+                ctx.arc(
+                        Math.floor(obj[i].x / 1E6) + 250, 
+                        Math.floor(obj[i].y / 1E6) + 250, 
+                        pRad(obj[i].mass),
+                        0, 
+                        2*Math.PI
+                );
+                ctx.fillStyle = obj[i].color;
+                ctx.fill();
+            };
+            return Object.keys(obj).length;
+        };
+
+        function recalcCoords(obj){
+            for(var i in obj) {
+                obj[i].x += -obj[i].v.x;
+                obj[i].y += -obj[i].v.y;
+            };
+            return Object.keys(obj).length;
+        };
+
+        function recalcVelocity(obj){
+            for(var i in obj) {
+                obj[i].v.x += obj[i].a.x;
+                obj[i].v.y += obj[i].a.y;
+            };
+            return Object.keys(obj).length;
+        };
+
+        function recalcAcceleration(obj){
+            for(var i in obj) {
+                for(var j in obj) {
+                    if (i==j) continue;
+
+                    var dx = obj[i].x-obj[j].x;
+                    var dy = obj[i].y-obj[j].y;
+
+                    var l = Math.sqrt(
+                            Math.pow(dx, 2) + 
+                            Math.pow(dy, 2)
+                            );
+
+                    var fAbs = gravity * obj[i].mass * obj[j].mass / Math.pow(l, 2);
+                    
+                    console.log(dx, dy, l, fAbs);
+                    obj[i].a.x += fAbs * dx * obj[j].mass / obj[i].mass;
+                    obj[i].a.y += fAbs * dy * obj[j].mass / obj[i].mass;
+                };
+            };
+            return Object.keys(obj).length;
+        };
+
+        function steep(){
+            ctx.clearRect(0, 0, cWidth, cHeight);
+            recalcCoords(obj);
+            recalcVelocity(obj);
+            recalcAcceleration(obj);
+            draw(obj);
+            console.log(obj);
+        };
+
+
+
+    </script>
+
+</body>
+</html>
+
