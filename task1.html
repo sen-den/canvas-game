@@ -1,0 +1,132 @@
+<html>
+<body>
+    <canvas id="main" width="500" height="500" style="border:1px solid #000000;" onClick="randoms(rects);">
+    </canvas>
+
+    <button onClick="replaces(rects);">Replace</button>
+    <button onClick="resizes(rects);">Resize</button>
+    <button onClick="recolors(rects);">Recolor</button>
+
+    <button onClick="add(rects);">Add</button>
+    <button onClick="remove(rects);">Remowe</button>
+
+    <button onClick="randoms(rects);">Random</button>
+
+    <script>
+        var canvas = document.getElementById("main");
+        var ctx = canvas.getContext("2d");
+        var cWidth = canvas.offsetWidth;
+        var cHeight = canvas.offsetHeight;
+
+
+        rectangle1 = {
+            x: 50, y: 50, dx: 300, dy: 300, 
+            r: 255, g: 0, b: 0, a: 0.5
+        };
+
+        rectangle2 = {
+            x: 150, y: 150, dx: 300, dy: 300, 
+            r: 0, g: 0, b: 255, a: 0.5
+        };
+
+        rects = [rectangle1, rectangle2];
+
+        redraw(rects);
+
+        function replace(rect) {
+            rect.x = Math.floor(Math.random() * (cWidth - rect.dx));
+            rect.y = Math.floor(Math.random() * (cHeight - rect.dy));
+            return rect;
+        };
+
+        function replaces(rects) {
+            for (rect in rects) {
+                replace(rects[rect]);
+            };
+            redraw(rects);
+        };
+
+        function resize(rect) {
+            rect.dx = Math.floor(Math.random() * (cWidth - rect.x));
+            rect.dy = Math.floor(Math.random() * (cHeight - rect.y));
+            return rect;
+        };
+
+        function resizes(rects) {
+            for (rect in rects) {
+                resize(rects[rect]);
+            };
+            redraw(rects);
+        };
+
+        function recolor(rect) {
+            rect.r = Math.floor(Math.random() * 255);
+            rect.g = Math.floor(Math.random() * 255);
+            rect.b = Math.floor(Math.random() * 255);
+            rect.a = Math.random();
+            return rect;
+        };
+
+        function recolors(rects) {
+            for (rect in rects) {
+                recolor(rects[rect]);
+            };
+            redraw(rects);
+        };
+
+
+
+        function drawRect(rect) {
+            ctx.fillStyle = 'rgba('+rect.r+', '+rect.g+', '+rect.b+', '+rect.a+')';
+            ctx.fillRect(rect.x, rect.y, rect.dx, rect.dy);
+        };
+
+        function redraw(rects) {
+            ctx.clearRect(0, 0, cWidth, cHeight);
+            for(rect in rects) {
+                drawRect(rects[rect]);
+            };
+        };
+
+        function add(rects) {
+            rects.unshift(
+                randRec({
+                    x: 50, y: 50, dx: 300, dy: 300, 
+                    r: 255, g: 0, b: 0, a: 0.5
+                })
+            );
+            redraw(rects);
+        };
+
+        function remove(rects) {
+            rects.pop();
+            redraw(rects);
+        };
+
+
+
+
+        function randRec(rect) {
+            replace(rect);
+            resize(rect);
+            recolor(rect);
+            return rect;
+        };
+
+        function randoms(rects) {
+            for (rect in rects) {
+                randRec(rects[rect]);
+            };
+            redraw(rects);
+        };
+
+        
+            
+
+           
+        
+    </script>
+
+</body>
+</html>
+

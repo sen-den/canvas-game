@@ -9,7 +9,7 @@
         var cWidth = canvas.offsetWidth;
         var cHeight = canvas.offsetHeight;
         
-        var gravity = 6.67E-11;
+        var gravity = 0.01;
         var dt = 0.1;
         var fMax = 1.0;
         var iterN = 10.0;
@@ -18,7 +18,7 @@
 
         var obj = {
             1: {
-                x: 0.0,
+                x: 120.0,
                 y: 0.0,
                 a: {
                     x: 0,
@@ -28,11 +28,11 @@
                     x: 0,
                     y: 0
                },
-                mass: 1.989E30,
+                mass: 30,
                 color: "#00FF00"
             },
             2: {
-                x: 1.5E8,
+                x: 108,
                 y: 0.0,
                 a: {
                     x: 0,
@@ -40,15 +40,15 @@
                 },
                 v: {
                     x: 0,
-                    y: 29.783
+                    y: 293
                 },
-                mass: 5.972E24,
+                mass: 74,
                 color: "#0000FF"
             }
         };
 
         function pRad(m) {
-            return Math.log(10) / Math.log(m);
+            return m;
         };
 
         function draw(obj){

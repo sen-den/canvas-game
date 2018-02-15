@@ -1,0 +1,66 @@
+<html>
+<body>
+    <canvas id="main" width="500" height="500" style="border:1px solid #000000;" onClick="steep();">
+    </canvas>
+
+    <script>
+        var canvas = document.getElementById("main");
+        var ctx = canvas.getContext("2d");
+        var cWidth = canvas.offsetWidth;
+        var cHeight = canvas.offsetHeight;
+        
+        var gravity = 1.0;
+        var dt = 1.0;
+
+        var objects = [];
+
+        function Vector(x, y) {
+            this.x = x;
+            this.y = y;
+        };
+
+        Vector.prototype.add = function(v) {
+            this.x += v.x;
+            this.y += v.y;
+        };
+
+        function Obj(x, y, mass, velocity) {
+            this.x = x;
+            this.y = y;
+            this.mass = mass;
+            this.velocity = velocity;
+        };
+        
+        var o = new Obj(100, 100, 10.0, new Vector(1, 1));
+
+
+        function draw(ctx, obj) {
+            ctx.fillStyle = getColor(obj.mass);
+            ctx.arc(
+                    obj.x,
+                    obj.y,
+                    getRadius(obj.mass),
+                    0,
+                    2.0*Math.PI
+                    );
+            ctx.fill();
+            return true;
+        };
+
+        objects.push(o);
+        for (var i=0, i<objects.length) {draw(ctx, objects[i]);};
+
+        function getColor(mass) {
+            return "rgba("+100+","+0+","+0+","+1.0+")";
+        };
+
+        function getRadius(mass) {
+            return 10;
+        };
+
+
+    </script>
+
+</body>
+</html>
+
