@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <canvas id="main" width="500" height="500" style="border:1px solid #000000;" onClick="redraw();">
+    </canvas>
+
+    <br>
+    Text color: <input type="color" id="textColor" onChange="update('fillStyle', 'textColor');"><br>
+    <!--Text backgroung: <input type="color" id="textBackground" onChange="update('???', '');"><br>-->
+
+    Text align: <input id="alignI" list="alignVariants" onChange="update('align', 'alignI');"><br>
+    Text baseline: <input id="baselineI" list="baselineVariants" onChange="update('baseline', 'baselineI');"><br>
+    Text dirction: <input id="directionI" list="directionVariants" onChange="update('direction', 'directionI');"><br>
+
+    <button onClick='random()'>Random</button>
+
+
+    <datalist id="alignVariants"></datalist>
+    <datalist id="baselineVariants"></datalist>
+    <datalist id="directionVariants"></datalist>
+
+
+    <script>
+    var canvasMain = document.getElementById("main")
+    var ctx = canvasMain.getContext("2d");
+    var cWidth = canvasMain.width, cHeight = canvasMain.height;
+
+    var textAlignVariants = ['start', 'end', 'left', 'right', 'center'];
+    var textBaselineVariants = ['alphabetic', 'top', 'hanging', 'middle', 'ideographic', 'bottom'];
+    var textDirectionVariants = ['inherit', 'ltr', 'rtl'];
+
+    var textParametrs = {
+        'align': 'start',
+        'baseline': 'alphabetic',
+        'direction': 'inheriet',
+        'font': "14px Comic Sans MS",
+        'fillStyle': "red",
+    };
+
+    var textParametrsDefault = {
+        'align': 'start',
+        'baseline': 'alphabetic',
+        'direction': 'inheriet',
+        'font': "14px Comic Sans MS",
+        'fillStyle': "red",
+    };
+
+
+    function addDatalistOption(dList, vList) {
+        for (variant in vList) {
+            var dl = document.getElementById(dList);
+            var opt = document.createElement("option");
+            opt.value = vList[variant];
+            dl.innerHTML += opt.outerHTML;
+        };
+    };
+
+    addDatalistOption("alignVariants", textAlignVariants);
+    addDatalistOption("baselineVariants", textBaselineVariants);
+    addDatalistOption("directionVariants", textDirectionVariants);
+
+    function update(f, d) {
+        textParametrs[f] = document.getElementById(d).value; 
+        if (textParametrs[f] == "") {textParametrs[f] = textParametrsDefault[f]};
+
+        console.log(textParametrs);
+    };
+
+    function redraw() {
+        ctx.clearRect(0, 0, cWidth, cHeight);
+        ctx.font = textParametrs["font"];
+        ctx.textBaseline = textParametrs["baseline"];
+        ctx.direction = textParametrs["direction"];
+        ctx.align = textParametrs["align"];
+        ctx.fillStyle = textParametrs["fillStyle"];
+
+        textParametrs["text"] = 
+            textParametrs['font'] + ' ' +
+            textParametrs["fillStyle"] + ' ' + 
+            textParametrs['align'] + ' ' +
+            textParametrs['baseline'] + ' ' + 
+            textParametrs['direction'] + ' '; 
+
+        ctx.fillText(textParametrs["text"], cWidth*0.1, cHeight*0.2); 
+
+        console.log(textParametrs);
+    };
+
+    function random() {
+        function rInt(a) {return Math.floor(Math.random() * a)};
+        textParametrs["fillStyle"] = "rgb("+rInt(255)+", "+rInt(255)+", "+rInt(255)+")";
+        textParametrs["baseline"] = textBaselineVariants[rInt(5)];
+        textParametrs["direction"] = textDirectionVariants[rInt(2)];
+        textParametrs["align"] = textAlignVariants[rInt(4)];
+        redraw();
+    };
+
+</script>
+
+</body>
+</html>
+
