@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <canvas id="main" width="500" height="500" style="border:1px solid #000000;" onClick="redraw();">
+    </canvas>
+
+    <br> 
+        <input type="number" id="x11" width="5"> X<sub>1</sub> + 
+        <input type="number" id="x12" width="5"> X<sub>2</sub> = 
+        <input type="number" id="x10" width="5"> 
+
+    <br>
+    <script>
+    var canvasMain = document.getElementById("main")
+    var ctx = canvasMain.getContext("2d");
+    var cWidth = canvasMain.width, cHeight = canvasMain.height;
+
+    function line(a, b, c) {
+        if (a == 0 and b == 0) { 
+            return 0;
+        };
+        if (a == 0) {
+            var x1r = 0;
+            var x2r = c / b;
+            ctx.moveTo(x1r, x2r+250);
+            ctx.lineTo(500, 500);
+            ctx.stroke();
+        };
+    };
+
+    line(0, 2, 100);
+
+</script>
+
+</body>
+</html>
+
