@@ -3,7 +3,13 @@
 <body>
     <canvas id="main" width="500" height="500" style="border:1px solid #000000;" onClick="redraw();">
     </canvas>
-
+<!--
+	<br> 
+        <input type="number" id="x1" width="5"> X<sub>1</sub>
+		<input type="number" id="y1" width="5"> Y<sub>1</sub>
+        <input type="number" id="x2" width="5"> X<sub>2</sub>
+		<input type="number" id="y2" width="5"> Y<sub>2</sub>
+-->
     <br> 
         <input type="number" id="x11" width="5"> X<sub>1</sub> + 
         <input type="number" id="x12" width="5"> X<sub>2</sub> = 
@@ -14,21 +20,64 @@
     var canvasMain = document.getElementById("main")
     var ctx = canvasMain.getContext("2d");
     var cWidth = canvasMain.width, cHeight = canvasMain.height;
-
-    function line(a, b, c) {
-        if (a == 0 and b == 0) { 
-            return 0;
-        };
-        if (a == 0) {
-            var x1r = 0;
-            var x2r = c / b;
-            ctx.moveTo(x1r, x2r+250);
-            ctx.lineTo(500, 500);
-            ctx.stroke();
-        };
-    };
-
-    line(0, 2, 100);
+	
+	function axis() {
+		ctx.strokeColor = "#FF0000";
+		drawLine(0, cWidth/2, cHeight, cWidth/2, "#FF0000");
+		drawLine(cWidth/2, 0, cWidth/2, cHeight, "#FF0000");
+		return 0;
+	};
+	
+	function drawLine(x1, y1, x2, y2, col) {
+		ctx.strokeColor = col;
+		ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+		console.log(x1, y1, x2, y2, col);
+		return 0;
+	};
+	
+	function redraw() {
+		axis();
+		var a = document.getElementById("x11").value;
+		var b = document.getElementById("x12").value;
+		var c = document.getElementById("x10").value;
+		var col = "#ff0000";
+		drawLineByEq(a,b,c,col);
+		return 0;
+	};
+	
+	function drawLineByEq(a, b, c, col) {
+		var x1 = 0, y1 = 0, x2 = 0, y2 = 0;
+		
+		if ((a == 0.0) && (b == 0.0)) {
+			return 1;
+		} else if (a == 0.0) {
+			x1 = 0;
+			y1 = cHeight/2 - c / b;
+			x2 = cWidth;
+			y2 = y1;
+			drawLine(x1,y1,x2,y2,col);
+			console.log(x1,y1,x2,y2);
+		} else if (b == 0.0) {
+			x1 = cWidth/2 + c / a;
+			y1 = 0;
+			x2 = x1;
+			y2 = cHeight;
+			drawLine(x1,y1,x2,y2,col);
+			console.log(x1,y1,x2,y2);
+		} else {
+			x1 = -250;
+			y1 = -(c - x1/a ) / b;
+			x2 = +250;
+			y2 = -(c - x2/a ) / b;
+			drawLine(x1+250,y1+250,x2+250,y2+250,col);
+			console.log(x1,y1,x2,y2);
+			return 0;
+		};
+	};
+	
+	
 
 </script>
 
