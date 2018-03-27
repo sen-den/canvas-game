@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="phaser.min.js"></script>
+</head>
+<body>
+
+    <script>
+
+    var game = new Phaser.Game(
+    	800, 
+    	600, 
+    	Phaser.CANVAS, 
+    	'', 
+   		{
+   			preload: preload, 
+   			create: create,
+   			update: update
+   		}
+   	);
+
+
+    function preload() {
+    	game.load.spritesheet('button', 'button_sprite_sheet.png', 193, 71);
+    	game.load.atlasXML('seacreatures', 'seacreatures.png', 'seacreatures.xml');
+    	game.load.image('undersea', 'undersea.jpg');
+    	game.load.image('coral', 'seabed.png');
+    }
+
+	var jellyfish;
+	var crab;
+	var greenJellyfish;
+	var octopus;
+	var purpleFish;
+	var seahorse;
+	var squid;
+	var stingray;
+	var flyingfish;
+	var button1;
+	var button2;
+
+
+	function create() {
+		game.add.image(0, 0, 'undersea');
+		game.add.image(0, 466, 'coral');
+		
+		octopus = game.add.sprite(200, 420, 'seacreatures');
+		octopus.animations.add('swim', Phaser.Animation.generateFrameNames('octopus', 0, 24, '', 4), 30, true);
+		octopus.animations.play('swim');
+		
+		jellyfish = game.add.sprite(280, 420, 'seacreatures');
+		jellyfish.animations.add('swim', Phaser.Animation.generateFrameNames('blueJellyfish', 0, 32, '', 4), 30, true);
+  		jellyfish.animations.play('swim');
+  		  				  		
+  		greenJellyfish = game.add.sprite(350, 420, 'seacreatures');
+		greenJellyfish.animations.add('swim', Phaser.Animation.generateFrameNames('greenJellyfish', 0, 39, '', 4), 30, true);
+		greenJellyfish.animations.play('swim');
+		
+		seahorse = game.add.sprite(510, 450, 'seacreatures');
+		seahorse.anchor.setTo(.5, .5);
+		seahorse.scale.x *= -1;
+		seahorse.animations.add('swim', Phaser.Animation.generateFrameNames('seahorse', 0, 5, '', 4), 30, true);
+		seahorse.animations.play('swim');
+		
+		stingray = game.add.sprite(620, 460, 'seacreatures');
+		stingray.anchor.setTo(.5, .5);
+		stingray.scale.x *= -.8;
+		stingray.scale.y *= -.8;
+		stingray.animations.add('swim', Phaser.Animation.generateFrameNames('stingray', 0, 23, '', 4), 30, true);
+		stingray.animations.play('swim');
+				
+		purpleFish = game.add.sprite(700, 400, 'seacreatures');
+		purpleFish.animations.add('swim', Phaser.Animation.generateFrameNames('purpleFish', 0, 20, '', 4), 30, true);
+		purpleFish.animations.play('swim');
+	  		
+  		crab = game.add.sprite(-150, 450, 'seacreatures');
+		crab.animations.add('swim', Phaser.Animation.generateFrameNames('crab1', 0, 25, '', 4), 30, true);
+		crab.animations.play('swim');
+	}
+	
+	function update() {
+		if (crab.x <= 50) {
+			crab.x += 3;
+		} else {
+			button1 = game.add.button(game.world.centerX - 95 -100, 250, 'button', actionOnClick, this, 2, 1, 0);
+			button2 = game.add.button(game.world.centerX - 95 +100, 250, 'button', actionOnClick, this, 1, 2, 0);
+		}
+	}
+	
+	function actionOnClick () {
+		console.log("button clicked");
+	}
+    
+    </script>
+
+</body>
+</html>
