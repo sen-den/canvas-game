@@ -31,15 +31,19 @@
     	game.load.image('email', 'email.png');
     }
 
-	var jellyfish;
-	var crab;
-	var greenJellyfish;
-	var octopus;
+	var jellyfish, jellyfish2;
+	var seahorse, seahorse2;
+	var squid, squid2;
+	var stingray, stingray2;
+	var flyingfish, flyingfish2;
+	var greenJellyfish, greenJellyfish2;
+	var octopus, octopus2;
+	
+	var crab, crab_tmp;
 	var purpleFish;
-	var seahorse;
-	var squid;
-	var stingray;
-	var flyingfish;
+	
+	var bg1;
+	var bg2;
 	
 	var computer;
 	var email;
@@ -50,38 +54,69 @@
 	var objects = [];
 	var state = 1;
 	var steep5_crab_jumps = 5;
+	var steep2_world_moves = 0;
 
 	function create() {
 		game.add.image(0, 0, 'undersea');
-		game.add.image(0, 466, 'coral');
+		bg1 = game.add.image(0, 466, 'coral');
+		bg2 = game.add.image(800, 466, 'coral');
+		bg2.anchor.setTo(1, 0);
+		bg2.scale.x *= -1;
 		
-		octopus = game.add.sprite(200, 420, 'seacreatures');
+		
+		/*** CROWD ***/
+		octopus = game.add.sprite(290, 420, 'seacreatures');
 		octopus.animations.add('swim', Phaser.Animation.generateFrameNames('octopus', 0, 24, '', 4), 30, true);
 		octopus.animations.play('swim');
 		
-		jellyfish = game.add.sprite(280, 420, 'seacreatures');
+		jellyfish = game.add.sprite(380, 420, 'seacreatures');
 		jellyfish.animations.add('swim', Phaser.Animation.generateFrameNames('blueJellyfish', 0, 32, '', 4), 30, true);
   		jellyfish.animations.play('swim');
   		  				  		
-  		greenJellyfish = game.add.sprite(350, 420, 'seacreatures');
+  		greenJellyfish = game.add.sprite(460, 380, 'seacreatures');
 		greenJellyfish.animations.add('swim', Phaser.Animation.generateFrameNames('greenJellyfish', 0, 39, '', 4), 30, true);
 		greenJellyfish.animations.play('swim');
 		
-		seahorse = game.add.sprite(510, 450, 'seacreatures');
+		seahorse = game.add.sprite(630, 450, 'seacreatures');
 		seahorse.anchor.setTo(.5, .5);
 		seahorse.scale.x *= -1;
 		seahorse.animations.add('swim', Phaser.Animation.generateFrameNames('seahorse', 0, 5, '', 4), 30, true);
 		seahorse.animations.play('swim');
 		
-		stingray = game.add.sprite(620, 460, 'seacreatures');
+		stingray = game.add.sprite(720, 460, 'seacreatures');
 		stingray.anchor.setTo(.5, .5);
 		stingray.scale.x *= -.8;
 		stingray.scale.y *= -.8;
 		stingray.animations.add('swim', Phaser.Animation.generateFrameNames('stingray', 0, 23, '', 4), 30, true);
 		stingray.animations.play('swim');
-				
+		/** part 2 **/
+		octopus2 = game.add.sprite(800, 420, 'seacreatures');
+		octopus2.animations.add('swim', Phaser.Animation.generateFrameNames('octopus', 0, 24, '', 4), 30, true);
+		octopus2.animations.play('swim');
+		
+		jellyfish2 = game.add.sprite(890, 420, 'seacreatures');
+		jellyfish2.animations.add('swim', Phaser.Animation.generateFrameNames('blueJellyfish', 0, 32, '', 4), 30, true);
+  		jellyfish2.animations.play('swim');
+  		  				  		
+  		greenJellyfish2 = game.add.sprite(950, 420, 'seacreatures');
+		greenJellyfish2.animations.add('swim', Phaser.Animation.generateFrameNames('greenJellyfish', 0, 39, '', 4), 30, true);
+		greenJellyfish2.animations.play('swim');
+		
+		seahorse2 = game.add.sprite(1300, 450, 'seacreatures');
+		seahorse2.anchor.setTo(.5, .5);
+		seahorse2.scale.x *= -1;
+		seahorse2.animations.add('swim', Phaser.Animation.generateFrameNames('seahorse', 0, 5, '', 4), 30, true);
+		seahorse2.animations.play('swim');
+		
+		stingray2 = game.add.sprite(1120, 460, 'seacreatures');
+		stingray2.anchor.setTo(.5, .5);
+		stingray2.scale.x *= -.8;
+		stingray2.scale.y *= -.8;
+		stingray2.animations.add('swim', Phaser.Animation.generateFrameNames('stingray', 0, 23, '', 4), 30, true);
+		stingray2.animations.play('swim');
+		/****************/	
 
-		purpleFish = game.add.sprite(700, 400, 'seacreatures');
+		purpleFish = game.add.sprite(1500, 400, 'seacreatures');
 		purpleFish.animations.add('swim', Phaser.Animation.generateFrameNames('purpleFish', 0, 20, '', 4), 30, true);
 		purpleFish.animations.play('swim');
 	  		
@@ -89,17 +124,20 @@
 		crab.animations.add('swim', Phaser.Animation.generateFrameNames('crab1', 0, 25, '', 4), 30, true);
 		crab.animations.play('swim');
 		
-		objects = [octopus, jellyfish, greenJellyfish, seahorse, stingray, purpleFish, crab];
+		objects = [octopus, jellyfish, greenJellyfish, seahorse, stingray, octopus2, jellyfish2, greenJellyfish2, seahorse2, stingray2, purpleFish, crab];
 		}
 	
 	function update() {
+		/***************** STATE CONTROLL *******************/
 		if ((state == 1) && (crab.x <= 50)) {
 			crab.x += 3;
 		} else if (state == 1) {
 			state = 2;
-			button1 = game.add.button(game.world.centerX - 250, 250, 'button1', '', this);
+			button1 = game.add.button(game.world.centerX - 250, 250, 'button1', moveWorld, this);
 			button2 = game.add.button(game.world.centerX + 10, 250, 'button2', toScene2, this);
 		} else if (state == 2) {
+		} else if (state == 21) {
+			moveWorld();
 		} else if (state == 3) {
 			computer = game.add.sprite(560, 460, 'computer');
 			computer.anchor.setTo(.5, .5);
@@ -133,7 +171,7 @@
 			state = 8;
 		}
 	}
-	
+	/*****************************************/
 	function toScene2 () {
 		state = 3;
 		button1.destroy();
@@ -155,6 +193,48 @@
 		crab.y += 500;
 		crab.x = -150;
 		state = 1;
+	}
+	
+	function moveWorld() {
+		state = 21;
+		console.log(steep2_world_moves);
+		if (steep2_world_moves < 80) {
+			moveAll(-10);
+			++steep2_world_moves;
+			return 0;
+		} else if (steep2_world_moves < 125) {
+			++steep2_world_moves;
+			return 0;
+		} else if (steep2_world_moves == 125) {
+			crab_tmp = game.add.sprite(500, 150, 'seacreatures');
+			crab_tmp.animations.add('swim', Phaser.Animation.generateFrameNames('crab1', 0, 25, '', 4), 30, true);
+			crab_tmp.animations.play('swim');
+			++steep2_world_moves;
+			return 0;
+		} else if (steep2_world_moves < 150) {
+			++steep2_world_moves;
+			return 0;
+		} else if (steep2_world_moves == 150) {
+			crab_tmp.destroy();
+			++steep2_world_moves;
+			return 0;
+		} else if (steep2_world_moves < 230) {
+			moveAll(+10);
+			++steep2_world_moves;
+			return 0;
+		} else {
+			state = 2;
+			steep2_world_moves = 0;
+			return 0;
+		}
+	}
+	
+	function moveAll(d) {
+		bg1.x += d;
+		bg2.x += d;
+		for (var i=0; i < objects.length; ++i) {
+			objects[i].x += d;
+		}
 	}
     </script>
 </body>
