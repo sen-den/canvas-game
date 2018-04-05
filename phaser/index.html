@@ -123,11 +123,13 @@
 		purpleFish.animations.add('swim', Phaser.Animation.generateFrameNames('purpleFish', 0, 20, '', 4), 30, true);
 		purpleFish.animations.play('swim');
 	  		
-  		crab = game.add.sprite(-150, 450, 'seacreatures');
+  		crab = game.add.sprite(1600, 450, 'seacreatures');
 		crab.animations.add('swim', Phaser.Animation.generateFrameNames('crab1', 0, 25, '', 4), 30, true);
 		crab.animations.play('swim');
 		
 		objects = [octopus, jellyfish, greenJellyfish, seahorse, stingray, octopus2, jellyfish2, greenJellyfish2, seahorse2, stingray2, purpleFish, crab];
+		
+		moveAll(-800);
 		}
 	
 	function update() {
